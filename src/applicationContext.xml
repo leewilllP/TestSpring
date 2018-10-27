@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+        <!--<context:component-scan base-package="cn.absalom"/>-->
+    <!--其作用是告诉Spring，bean都放在cn.absalom.pojo这个包下-->
+
+        <context:annotation-config/>
+        <bean name="c" class="cn.absalom.pojo.Category">
+            <property name="name" value="category1"/>
+        </bean>
+        <bean name="p" class="cn.absalom.pojo.Product">
+            <property name="name" value="product1"/>
+            <property name="category" ref="c"/>
+        </bean>
+        <bean name="s" class="cn.absalom.service.ProductService">
+        </bean>
+        <!--<bean id="loggerAspect" class="cn.absalom.aspect.LoggerAspect"/>
+            <aop:config>
+                <aop:pointcut id="loggerCutpoint"
+                              expression="execution(* cn.absalom.service.ProductService.*(..)) "/>
+                <aop:aspect id="logAspect" ref="loggerAspect">
+                    <aop:around pointcut-ref="loggerCutpoint" method="log"/>
+                </aop:aspect>
+            </aop:config>-->
+    <!--AOP注解-->
+        <context:component-scan base-package="cn.absalom.aspect"/>
+        <context:component-scan base-package="cn.absalom.service"/>
+        <aop:aspectj-autoproxy/>
+        <!--<bean id="timeAspect" class="cn.absalom.aspect.TimeAspect"/>
+        <aop:config>
+            <aop:pointcut id="timeCutPoint"
+                          expression="execution(* cn.absalom.service.ProductService.*(..)) "/>
+            <aop:aspect id="tiAspect" ref="timeAspect">
+                <aop:around pointcut-ref="timeCutPoint" method="log"/>
+            </aop:aspect>
+        </aop:config>-->
+</beans>
